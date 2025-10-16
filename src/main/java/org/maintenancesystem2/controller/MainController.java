@@ -1,5 +1,6 @@
 package org.maintenancesystem2.controller;
 
+import org.maintenancesystem2.service.MaterialService;
 import org.maintenancesystem2.service.SupplierService;
 import org.maintenancesystem2.view.helpers.MessageHelper;
 import org.maintenancesystem2.view.menus.MainMenuView;
@@ -8,6 +9,7 @@ public class MainController {
 
     MainMenuView mainMenuView = new MainMenuView();
     SupplierService supService = new SupplierService();
+    MaterialService matService = new MaterialService();
 
     public void mainController(){
         int opcao;
@@ -16,7 +18,7 @@ public class MainController {
 
             switch (opcao){
                 case 1 -> supService.registerSupplier();
-//                case 2 -> ;
+                case 2 -> matService.registerMaterial();
 //                case 3 -> ;
 //                case 4 -> ;
 //                case 5 -> ;

@@ -1,8 +1,10 @@
 package org.maintenancesystem2.view;
 
+import org.maintenancesystem2.model.Material;
 import org.maintenancesystem2.view.helpers.InputHelper;
 import org.maintenancesystem2.view.helpers.MessageHelper;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MaterialView {
@@ -43,9 +45,22 @@ public class MaterialView {
         while(true){
             quantity = InputHelper.inputDouble("|| Insira a quantidade em estoque desse Material: ", sc);
             if(quantity < 0){
-                MessageHelper.error("A quantidade não pode ser negativa");
+                MessageHelper.error("Quantidade inválida!");
             }else{
                 return quantity;
+            }
+        }
+    }
+
+    public void materialList(List<Material> materialList){
+        if(materialList.isEmpty()){
+            MessageHelper.error("Nenhum material foi encontrado!");
+        }else{
+            System.out.println("|| ------- MATERIAIS ------- ||");
+            for(Material material : materialList){
+                System.out.printf("|| [%d] %s\n", material.getId(), material.getName());
+                System.out.printf("|| %.2f %s\n", material.getQuantityInStock(), material.getUnit());
+                System.out.println("|| --------------------------------------------------------");
             }
         }
     }

@@ -44,7 +44,7 @@ public class Material {
         this.unit = unit;
     }
 
-    public double getQuantity() {
+    public double getQuantityInStock() {
         return quantityInStock;
     }
 

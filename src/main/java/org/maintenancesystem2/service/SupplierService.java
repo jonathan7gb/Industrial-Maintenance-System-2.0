@@ -19,10 +19,11 @@ public class SupplierService {
         String cnpj = supView.inputSupplierCnpj();
         boolean cnpjExists = supDao.verifyIfCnpjAlreadyExists(cnpj);
         if(cnpjExists){
-            MessageHelper.error("CNPJ já cadastrado.");
+            MessageHelper.error("CNPJ já cadastrado.\n");
         }else{
             Supplier sup = new Supplier(name, cnpj);
             supDao.registerSupplierDAO(sup);
+            MessageHelper.success("Fornecedor cadastrado com sucesso.\n");
         }
     }catch (SQLException e){
         MessageHelper.error(e.getMessage());
