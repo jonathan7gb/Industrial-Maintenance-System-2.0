@@ -43,7 +43,7 @@ public class EntryNoteService {
                     List<Material> materials = matDAO.getAllMaterials();
                     while(true){
                         if(materials.isEmpty()){
-                            matView.materialList(materials);
+                            MessageHelper.error("Nenhum Material Disponível!\n");
                             return;
                         }else{
                             matView.materialList(materials);
@@ -55,10 +55,18 @@ public class EntryNoteService {
                                 return;
                             }else{
                                 Material material = matDAO.verifyIfIDExists(matId);
-                                if (material == null) {
+                                if (material == null || !materials.contains(material)) {
                                     MessageHelper.error("Material não encontrado com esse ID!\n");
                                 }else{
-                                    materials.remove(material);
+                                    while(true) {
+                                        double quantity = matView.inputMaterialQuantityInStock();
+                                        if (quantity > material.getQuantityInStock()) {
+                                            MessageHelper.error("Quantidade de materiais insuficiente!\n");
+                                        } else {
+                                            break;
+                                        }
+                                        materials.remove(material);
+                                    }
                                 }
                             }
                         }
