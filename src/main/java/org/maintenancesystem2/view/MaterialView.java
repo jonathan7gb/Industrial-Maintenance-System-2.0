@@ -43,7 +43,7 @@ public class MaterialView {
     public double inputMaterialQuantityInStock(){
         double quantity;
         while(true){
-            quantity = InputHelper.inputDouble("|| Insira a quantidade em estoque desse Material: ", sc);
+            quantity = InputHelper.inputDouble("|| Insira a quantidade desse Material: ", sc);
             if(quantity < 0){
                 MessageHelper.error("Quantidade inválida!");
             }else{
@@ -58,8 +58,8 @@ public class MaterialView {
         }else{
             System.out.println("|| ------- MATERIAIS ------- ||");
             for(Material material : materialList){
-                System.out.printf("|| [%d] %s\n", material.getId(), material.getName());
-                System.out.printf("|| %.2f %s\n", material.getQuantityInStock(), material.getUnit());
+                System.out.printf("|| [%d] %-12s |", material.getId(), material.getName());
+                System.out.printf(" %.1f %s\n", material.getQuantityInStock(), material.getUnit());
                 System.out.println("|| --------------------------------------------------------");
             }
         }

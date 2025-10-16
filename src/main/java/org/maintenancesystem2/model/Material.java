@@ -1,5 +1,7 @@
 package org.maintenancesystem2.model;
 
+import java.util.Objects;
+
 public class Material {
 
     private Long id;
@@ -60,5 +62,17 @@ public class Material {
                 ", unit='" + unit + '\'' +
                 ", quantity=" + quantityInStock +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Material material = (Material) o;
+        return Double.compare(quantityInStock, material.quantityInStock) == 0 && Objects.equals(id, material.id) && Objects.equals(name, material.name) && Objects.equals(unit, material.unit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, unit, quantityInStock);
     }
 }

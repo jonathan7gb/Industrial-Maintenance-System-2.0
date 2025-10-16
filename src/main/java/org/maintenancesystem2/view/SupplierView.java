@@ -46,12 +46,12 @@ public class SupplierView {
 
     public void supplierList(List<Supplier> supplierList){
         if(supplierList.isEmpty()){
-            MessageHelper.error("Nenhum fornecedor foi encontrado!");
+            MessageHelper.error("Nenhum fornecedor foi encontrado!\n");
         }else{
             System.out.println("|| ------ FORNECEDORES ------ ||");
             for(Supplier supplier : supplierList){
                 System.out.printf("|| [%d] %s\n", supplier.getId(), supplier.getName());
-                System.out.println("|| --------------------------------------------------------");
+                System.out.println("|| -----------------------------");
             }
         }
     }

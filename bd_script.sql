@@ -42,7 +42,7 @@ select * from RequisicaoItem;
 CREATE TABLE NotaEntrada (
 id INT PRIMARY KEY AUTO_INCREMENT,
 idFornecedor INT NOT NULL,
-dataEntrada DATE NOT NULL,
+dataEntrada DATE NOT NULL DEFAULT (CURRENT_DATE),
 FOREIGN KEY (idFornecedor) REFERENCES Fornecedor(id)
 );
 select * from NotaEntrada;

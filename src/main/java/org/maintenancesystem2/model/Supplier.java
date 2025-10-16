@@ -12,6 +12,11 @@ public class Supplier {
         this.cnpj = cnpj;
     }
 
+    public Supplier(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Supplier(String name, String cnpj) {
         this.name = name;
         this.cnpj = cnpj;
