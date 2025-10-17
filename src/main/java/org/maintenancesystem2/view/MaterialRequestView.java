@@ -10,6 +10,18 @@ public class MaterialRequestView {
 
     Scanner sc = new Scanner(System.in);
 
+    public Long inputID(){
+        Long id;
+        while(true){
+            id = (long) InputHelper.inputInteger("|| Insira o ID da Requisição: ", sc);
+            if(id == null){
+                MessageHelper.error("O ID não pode ser vazio!");
+            }else{
+                return id;
+            }
+        }
+    }
+
     public String inputSector(){
         String sector;
         while(true){

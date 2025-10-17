@@ -65,4 +65,8 @@ public class MaterialRequestService {
             MessageHelper.error(e.getMessage());
         }
     }
+
+    public void acceptMaterialRequest(){
+
+    }
 }
