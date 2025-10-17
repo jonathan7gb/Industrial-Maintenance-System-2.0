@@ -26,7 +26,10 @@ public class MainController {
 //                case 4 -> ;
 //                case 5 -> ;
 //                case 6 -> ;
-                case 0 -> {return;}
+                case 0 -> {
+                    System.out.println("\n|| ----- SISTEMA ENCERRADO ----- ||");
+                    return;
+                }
                 default -> MessageHelper.invalidIntInput();
             }
         }

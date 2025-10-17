@@ -58,9 +58,9 @@ public class MaterialView {
         }else{
             System.out.println("|| ------- MATERIAIS ------- ||");
             for(Material material : materialList){
-                System.out.printf("|| [%d] %-12s |", material.getId(), material.getName());
+                System.out.printf("|| [%d] %-18s |", material.getId(), material.getName());
                 System.out.printf(" %.1f %s\n", material.getQuantityInStock(), material.getUnit());
-                System.out.println("|| --------------------------------------------------------");
+                System.out.println("|| -----------------------------");
             }
         }
     }

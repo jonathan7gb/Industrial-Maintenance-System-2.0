@@ -52,21 +52,17 @@ public class EntryNoteService {
                             matId = matView.inputMaterialId();
 
                             if(matId == 0){
+                                MessageHelper.info("Finalizando Registro de Nota de Entrada\n");
                                 return;
                             }else{
                                 Material material = matDAO.verifyIfIDExists(matId);
                                 if (material == null || !materials.contains(material)) {
                                     MessageHelper.error("Material não encontrado com esse ID!\n");
                                 }else{
-                                    while(true) {
                                         double quantity = matView.inputMaterialQuantityInStock();
-                                        if (quantity > material.getQuantityInStock()) {
-                                            MessageHelper.error("Quantidade de materiais insuficiente!\n");
-                                        } else {
-                                            break;
-                                        }
+                                        Long idEntry = enDAO.registerEntryNoteDAO(entryNote);
+                                        enDAO.registerEntryNoteItems(idEntry, material, quantity);
                                         materials.remove(material);
-                                    }
                                 }
                             }
                         }
@@ -76,6 +72,6 @@ public class EntryNoteService {
             }
         }catch (SQLException e){
                 MessageHelper.error(e.getMessage());
-            }
+        }
     }
 }
