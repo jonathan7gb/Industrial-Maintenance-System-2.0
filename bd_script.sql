@@ -22,9 +22,8 @@ select * from Material;
 CREATE TABLE Requisicao (
 id INT PRIMARY KEY AUTO_INCREMENT,
 setor VARCHAR(50) NOT NULL,
-dataSolicitacao DATE NOT NULL,
-
-status ENUM('PENDENTE', 'ATENDIDA', 'CANCELADA') NOT NULL 
+dataSolicitacao DATE NOT NULL DEFAULT (CURRENT_DATE),
+status ENUM('PENDENTE', 'ATENDIDA', 'CANCELADA') DEFAULT 'PENDENTE'
 );
 select * from Requisicao;
 
