@@ -4,6 +4,8 @@ import org.maintenancesystem2.connectionDatabase.ConnectionDatabase;
 import org.maintenancesystem2.model.Material;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MaterialRequestDAO {
 
@@ -40,6 +42,30 @@ public class MaterialRequestDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
+        }
+    }
+
+    public List<String> getAllMaterialRequests() throws SQLException {
+        String command = """
+                SELECT id, setor, dataSolicitacao
+                FROM Requisicao 
+                WHERE status = 'PENDENTE'
+                """;
+
+        List<String> materialRequests = new ArrayList<>();
+
+        try (Connection conn = ConnectionDatabase.connect();
+             PreparedStatement stmt = conn.prepareStatement(command);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while(rs.next()) {
+                Long id = rs.getLong("id");
+                String sector =  rs.getString("setor");
+                Date date = rs.getDate("dataSolicitacao");
+                materialRequests.add("|| ["+id+"] " + date.toString() + "\n|| Setor: "+ sector);
+            }
+
+            return materialRequests;
         }
     }
 }

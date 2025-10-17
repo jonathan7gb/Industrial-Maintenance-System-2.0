@@ -3,6 +3,7 @@ package org.maintenancesystem2.view;
 import org.maintenancesystem2.view.helpers.InputHelper;
 import org.maintenancesystem2.view.helpers.MessageHelper;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MaterialRequestView {
@@ -21,4 +22,14 @@ public class MaterialRequestView {
         }
     }
 
+    public void MaterialRequestList(List<String> materialRequest){
+        if(materialRequest.isEmpty()){
+            MessageHelper.error("Nenhuma Requisição encontrada!\n");
+        }else{
+            for(String str : materialRequest){
+                System.out.println(str);
+                System.out.println("|| --------------------------");
+            }
+        }
+    }
 }
