@@ -25,8 +25,8 @@ public class MainController {
                 case 1 -> supService.registerSupplier();
                 case 2 -> matService.registerMaterial();
                 case 3 -> enService.registerEntryNote();
-                case 4 ->  mrService.registerMaterialRequest();
-//                case 5 -> ;
+                case 4 -> mrService.registerMaterialRequest();
+                case 5 -> mrService.acceptMaterialRequest();
 //                case 6 -> ;
                 case 0 -> {
                     System.out.println("\n|| ----- SISTEMA ENCERRADO ----- ||");

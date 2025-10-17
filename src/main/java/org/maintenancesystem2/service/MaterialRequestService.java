@@ -67,6 +67,17 @@ public class MaterialRequestService {
     }
 
     public void acceptMaterialRequest(){
-
+    try{
+        System.out.println("\n|| ----- ACEITAR REQUISIÇÃO DE MATERIAL ----- ||");
+        List<String> materialRequests = mrDAO.getAllMaterialRequests();
+        matReqView.MaterialRequestList(materialRequests);
+        if(materialRequests.isEmpty()){
+            return;
+        }else{
+            Long idMR = matReqView.inputID();
+        }
+    }catch (SQLException e){
+        MessageHelper.error(e.getMessage());
+    }
     }
 }
