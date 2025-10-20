@@ -83,12 +83,35 @@ public class MaterialRequestService {
                 System.out.println("\n|| --------- INFO DA REQUISIÇÃO --------- ||");
                 System.out.println(materialRequest);
                 System.out.println("|| ------------------------------\n|| Materiais ------------------- ");
-                List<String> materialRequestItems = mrDAO.getAllMaterialRequestsItems(idMR);
-                for(String item : materialRequestItems){
-                    System.out.println(item);
+                List<Material> materialRequestItems = mrDAO.getAllMaterialRequestsItems(idMR);
+                for(Material m : materialRequestItems){
+                    System.out.println("|| "+ m.getQuantityInStock() + " " + m.getUnit() + " " + m.getName());
                     System.out.println("|| ------------------------------");
                 }
                 System.out.println("");
+                String acceptChoice = matReqView.acceptMaterialRequest();
+                if(acceptChoice.equalsIgnoreCase("S")) {
+                    for(Material m : materialRequestItems){
+                        mrDAO.acceptMaterialRequest(m);
+                    }
+                    int affectedRows = mrDAO.setStatusRequest(idMR, "ATENDIDA");
+                    if(affectedRows == 0){
+                        MessageHelper.error("Erro ao mudar o status da requisição!\n");
+                    }else{
+                        MessageHelper.success("Requisição Atendida com sucesso!\n");
+                    }
+
+                }else if(acceptChoice.equalsIgnoreCase("N")) {
+                    int affectedRows = mrDAO.setStatusRequest(idMR, "CANCELADA");
+                    if(affectedRows == 0){
+                        MessageHelper.error("Erro ao mudar o status da requisição!\n");
+                    }else{
+                        MessageHelper.info("Requisição Cancelada com sucesso!\n");
+                    }
+                } else{
+                    MessageHelper.error("Entrada inválida, tente novamente!\n");
+                    return;
+                }
 
             }
         }

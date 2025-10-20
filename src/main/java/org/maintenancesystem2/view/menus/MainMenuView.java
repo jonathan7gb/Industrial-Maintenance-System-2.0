@@ -14,7 +14,6 @@ public class MainMenuView {
                 || [3] Registrar Nota de Entrada
                 || [4] Criar Requisição de Material
                 || [5] Atender Requisição
-                || [6] Cancelar Requisição
                 || ------------------------------------------------------
                 || [0] Sair
                 || ------------------------------------------------------""");

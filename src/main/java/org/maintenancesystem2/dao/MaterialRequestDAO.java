@@ -69,16 +69,16 @@ public class MaterialRequestDAO {
         }
     }
 
-    public List<String> getAllMaterialRequestsItems(Long idRequisicao) throws SQLException {
+    public List<Material> getAllMaterialRequestsItems(Long idRequisicao) throws SQLException {
         String command = """
-                SELECT M.nome as materialNome, M.unidade as unidade, RI.quantidade as quantidade
+                SELECT M.id, M.nome as materialNome, M.unidade as unidade, RI.quantidade as quantidade
                 FROM RequisicaoItem as RI 
                 JOIN Requisicao as R on R.id = RI.idRequisicao
                 JOIN Material as M on M.id = RI.idMaterial
                 WHERE R.id = ?
                 """;
 
-        List<String> materialRequestsItems = new ArrayList<>();
+        List<Material> materialRequestsItems = new ArrayList<>();
 
         try (Connection conn = ConnectionDatabase.connect();
              PreparedStatement stmt = conn.prepareStatement(command)) {
@@ -86,13 +86,13 @@ public class MaterialRequestDAO {
             stmt.setLong(1, idRequisicao);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-
+                Long id = rs.getLong("id");
                 String materialName = rs.getString("materialNome");
                 String materialUnit = rs.getString("unidade");
                 double materialQuantity = rs.getDouble("quantidade");
 
 
-                materialRequestsItems.add("|| " + materialQuantity+ " "+ materialUnit+" - " + materialName);
+                materialRequestsItems.add(new Material(id, materialName, materialUnit, materialQuantity));
             }
 
             return materialRequestsItems;
@@ -124,5 +124,42 @@ public class MaterialRequestDAO {
 
             return null;
         }
+    }
+
+    public int setStatusRequest(Long idRequisicao, String status) throws SQLException {
+        String command = """
+                UPDATE Requisicao
+                SET  status = ?
+                WHERE id = ?
+                AND status = 'PENDENTE'
+        """;
+
+        try (Connection conn = ConnectionDatabase.connect();
+             PreparedStatement stmt = conn.prepareStatement(command)) {
+
+            stmt.setString(1, status);
+            stmt.setLong(2, idRequisicao);
+            int  updateCount = stmt.executeUpdate();
+            return updateCount;
+
+        }
+    }
+
+    public boolean acceptMaterialRequest(Material material) throws SQLException {
+        String command = """
+                UPDATE Material
+                SET estoque = estoque - ?
+                WHERE id = ?
+        """;
+        try (Connection conn = ConnectionDatabase.connect();
+             PreparedStatement stmt = conn.prepareStatement(command)) {
+
+            stmt.setDouble(1, material.getQuantityInStock());
+            stmt.setLong(2, material.getId());
+            stmt.executeUpdate();
+            return true;
+
+        }
+
     }
 }

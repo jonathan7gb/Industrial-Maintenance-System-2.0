@@ -44,4 +44,8 @@ public class MaterialRequestView {
             }
         }
     }
+
+    public String acceptMaterialRequest(){
+        return InputHelper.inputString("|| VOCÊ TEM CERTEZA QUE DESEJA ATENDER ESSA REQUISIÇÃO?, \n|| VERIFIQUE OS MATERIAIS PRESENTES NA LISTA\n|| S - ATENDER REQUISIÇÃO OU N - CANCELAR REQUISIÇÃO\n|| Sua escolha (S/N): ", sc);
+    }
 }
