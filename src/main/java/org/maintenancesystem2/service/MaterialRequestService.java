@@ -8,6 +8,7 @@ import org.maintenancesystem2.view.MaterialView;
 import org.maintenancesystem2.view.helpers.MessageHelper;
 
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.List;
 
 public class MaterialRequestService {
@@ -26,6 +27,7 @@ public class MaterialRequestService {
             if(sector.isBlank()){
                 return;
             }else{
+                    Long idMR = mrDAO.registerMaterialRequest(sector);
                     System.out.println();
                     List<Material> materials = matDAO.getAllMaterials();
                     while(true){
@@ -50,7 +52,6 @@ public class MaterialRequestService {
                                     if(quantity > material.getQuantityInStock()){
                                         MessageHelper.error("Quantidade insuficiente!\n");
                                     }else{
-                                        Long idMR = mrDAO.registerMaterialRequest(sector);
                                         mrDAO.registerMaterialRequestItems(idMR, material, quantity);
                                         materials.remove(material);
                                     }
@@ -75,6 +76,21 @@ public class MaterialRequestService {
             return;
         }else{
             Long idMR = matReqView.inputID();
+            String materialRequest = mrDAO.getMaterialRequestByID(idMR);
+            if(materialRequest == null){
+                MessageHelper.error("Requisição de Item não encontrada!\n");
+            }else{
+                System.out.println("\n|| --------- INFO DA REQUISIÇÃO --------- ||");
+                System.out.println(materialRequest);
+                System.out.println("|| ------------------------------\n|| Materiais ------------------- ");
+                List<String> materialRequestItems = mrDAO.getAllMaterialRequestsItems(idMR);
+                for(String item : materialRequestItems){
+                    System.out.println(item);
+                    System.out.println("|| ------------------------------");
+                }
+                System.out.println("");
+
+            }
         }
     }catch (SQLException e){
         MessageHelper.error(e.getMessage());

@@ -68,4 +68,61 @@ public class MaterialRequestDAO {
             return materialRequests;
         }
     }
+
+    public List<String> getAllMaterialRequestsItems(Long idRequisicao) throws SQLException {
+        String command = """
+                SELECT M.nome as materialNome, M.unidade as unidade, RI.quantidade as quantidade
+                FROM RequisicaoItem as RI 
+                JOIN Requisicao as R on R.id = RI.idRequisicao
+                JOIN Material as M on M.id = RI.idMaterial
+                WHERE R.id = ?
+                """;
+
+        List<String> materialRequestsItems = new ArrayList<>();
+
+        try (Connection conn = ConnectionDatabase.connect();
+             PreparedStatement stmt = conn.prepareStatement(command)) {
+
+            stmt.setLong(1, idRequisicao);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+
+                String materialName = rs.getString("materialNome");
+                String materialUnit = rs.getString("unidade");
+                double materialQuantity = rs.getDouble("quantidade");
+
+
+                materialRequestsItems.add("|| " + materialQuantity+ " "+ materialUnit+" - " + materialName);
+            }
+
+            return materialRequestsItems;
+        }
+
+    }
+
+    public String getMaterialRequestByID(Long idRequisicao) throws SQLException {
+        String command = """
+                SELECT id, setor, dataSolicitacao
+                FROM Requisicao 
+                WHERE status = 'PENDENTE'
+                AND id = ?
+                """;
+
+
+        try (Connection conn = ConnectionDatabase.connect();
+             PreparedStatement stmt = conn.prepareStatement(command)) {
+
+            stmt.setLong(1, idRequisicao);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Long id = rs.getLong("id");
+                String sector = rs.getString("setor");
+                Date date = rs.getDate("dataSolicitacao");
+
+                return "|| [" + id + "] " + date.toString() + "\n|| Setor: " + sector;
+            }
+
+            return null;
+        }
+    }
 }
