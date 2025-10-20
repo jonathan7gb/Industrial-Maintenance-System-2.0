@@ -91,16 +91,6 @@ Adicionar conector MySQL:
 </dependency>
 ```
 
-Configuração de conexão (exemplo)
----------------------------------
-Crie um arquivo de configuração (ex: config.properties) contendo:
-
-```
-db.url=jdbc:mysql://localhost:3306/almoxarifado
-db.user=seu_usuario
-db.password=sua_senha
-```
-
 Fluxo de menu (console) — exemplo de opções
 ------------------------------------------
 1) Cadastrar Fornecedor
@@ -127,10 +117,3 @@ Testes manuais sugeridos
 4. Criar requisição com quantidade maior que o estoque → deve impedir.
 5. Atender requisição com estoque suficiente → estoque reduz; status ATENDIDA.
 6. Tentar atender requisição com estoque insuficiente → operação negada; status inalterado.
-
-Próximos passos recomendados (implementação)
---------------------------------------------
-- Implementar modelos (POJOs) e DAOs com métodos básicos: inserir, atualizar, buscar por id, listar.
-- Criar ConnectionFactory para obter conexões via config.properties.
-- Implementar menu console com fluxo e validações.
-- Testar cenários de transação (rollback em erro).
